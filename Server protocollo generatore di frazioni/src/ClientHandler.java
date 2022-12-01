@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -21,6 +22,8 @@ public class ClientHandler extends Thread{
                 char[] buf = new char[512];
                 int readChars = in.read(buf);
                 String message = new String(buf,0,readChars);
+                message = message.replace("\n", "");
+                message = message.replace("\r", "");
                 messageHandler.handle(message);
             }
         } catch (IOException e) {
@@ -37,7 +40,9 @@ public class ClientHandler extends Thread{
         if (this.client.isConnected())
         {
             try {
-                this.client.getOutputStream().write((message + "\r").getBytes());
+                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                out.println(message);
+                //this.client.getOutputStream().write((message + "\r").getBytes());
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

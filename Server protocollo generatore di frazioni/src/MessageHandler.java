@@ -9,29 +9,39 @@ public class MessageHandler {
     }
 
     public void handle(String message){
-        String[] splitted = message.split("=");
-        String command = splitted[0];
-        String param="";
-        if (splitted.length>1)
-            param = splitted[1];
-        if (command.toUpperCase().equals("SET NUMBER"))
-        {
-            saveState(param);
-            clientHandler.answer("NUMBER=" + MessageHandler.getState(clientHandler.getMyIp()));
+        try{
+            String[] splitted = message.split("=");
+            String command = splitted[0];
+            String param="";
+            if (splitted.length>1)
+                param = splitted[1];
+            if (command.toUpperCase().equals("SET NUMBER"))
+            {
+                saveState(param);
+                clientHandler.answer("NUMBER=" + MessageHandler.getState(clientHandler.getMyIp()));
+            }
+            else if (command.toUpperCase().equals("GET FRACTION"))
+            {
+                Solver s=null;
+                String number = MessageHandler.getState(clientHandler.getMyIp());
+                if (param.toLowerCase().equals("g"))
+                    s = new Solver(number);
+                else if (param.equals("%"))
+                    s = new PercentualSolver(number);
+                else if (param.startsWith("/"))
+                {
+                    String temp = param;
+                    String[] splitting = temp.split("/");
+                    int denumeratorRequired = Integer.parseInt(splitting[1]);
+                    s = new DenumeratorSolver(number, denumeratorRequired);
+                }
+                if (s!=null)
+                    clientHandler.answer(s.solve().toString());
+                
+            }
         }
-        else if (command.toUpperCase().equals("GET FRACTION"))
-        {
-            Solver s=null;
-            String number = MessageHandler.getState(clientHandler.getMyIp());
-            if (param.toLowerCase()=="g")
-                s = new Solver(number);
-            else if (param =="%")
-                s = new PercentualSolver(number);
-            else if (param.startsWith("/"))
-                s = new DenumeratorSolver(number);
-            if (s!=null)
-                clientHandler.answer(s.solve().toString());
-            
+        catch(Exception e){
+
         }
     }
 

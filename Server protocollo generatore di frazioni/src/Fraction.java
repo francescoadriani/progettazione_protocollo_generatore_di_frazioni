@@ -11,7 +11,10 @@ public class Fraction {
     
     @Override
     public String toString(){
-        return numerator + "/" + denominator + ";" + command;
+        if (denominator>1)
+            return numerator + "/" + denominator + ";" + command;
+        else
+            return numerator + ";" + command;
     }
 
     public int getNumerator(){

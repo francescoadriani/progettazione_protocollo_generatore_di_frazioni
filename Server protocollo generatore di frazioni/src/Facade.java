@@ -1,7 +1,6 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
 public class Facade {
     public static void main(String[] args) throws Exception {
         System.out.println("Starting server");
@@ -11,7 +10,7 @@ public class Facade {
         try {
             while (true){
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("New client connected " + clientSocket.getInetAddress().getHostName() + " port " + clientSocket.getLocalPort());
+                System.out.println("New client connected " + clientSocket.getInetAddress().getHostName() + " port " + clientSocket.getPort());
                 ClientHandler cHandler = new ClientHandler(clientSocket);
                 cHandler.start();
                 clientHandlerList.add(cHandler);

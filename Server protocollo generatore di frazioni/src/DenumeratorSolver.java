@@ -1,14 +1,13 @@
 public class DenumeratorSolver extends Solver{
-
-    public DenumeratorSolver(String number) {
+    private int denumerator=0;
+    public DenumeratorSolver(String number, int denumerator) {
         super(number);
-        //TODO Auto-generated constructor stub
+        this.denumerator=denumerator;
     }
 
     @Override
     public Fraction solve(){
         Fraction generator = super.solve();
-        int denumeratorRequired = Integer.parseInt(super.number.split("/")[1]);
-        return new Fraction((int)(generator.getNumerator()/generator.getDenominator() * denumeratorRequired), denumeratorRequired, "/" + denum);
+        return new Fraction((int)((double)generator.getNumerator()* (double)denumerator / (double)generator.getDenominator() ), denumerator, "/" + denumerator);
     }
 }
