@@ -11,7 +11,7 @@ public class State{
     public State (InetAddress ip, Date lastMessageOn){
         this.ip=ip;
         this.lastMessageOn=lastMessageOn;
-        this.number="1";
+        this.number="0";
     }
     public State (InetAddress ip, Date lastMessageOn, String number){
         this(ip,lastMessageOn);
@@ -21,7 +21,7 @@ public class State{
         Date now = new java.util.Date(System.currentTimeMillis());
         Duration lastMessageSince = Duration.ofMillis(now.getTime()- lastMessageOn.getTime());
         if (lastMessageSince.compareTo(expiryTime)>0)
-            number = "1";
+            number = "0";
         return number;
     }
     public void refreshTime(){

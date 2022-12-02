@@ -20,6 +20,10 @@ public class MessageHandler {
                 saveState(param);
                 clientHandler.answer("NUMBER=" + MessageHandler.getState(clientHandler.getMyIp()));
             }
+            else if (command.toUpperCase().equals("GET NUMBER"))
+            {
+                clientHandler.answer("NUMBER=" + MessageHandler.getState(clientHandler.getMyIp()));
+            }
             else if (command.toUpperCase().equals("GET FRACTION"))
             {
                 Solver s=null;
