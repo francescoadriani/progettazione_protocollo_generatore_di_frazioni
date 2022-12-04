@@ -15,6 +15,9 @@ public class MessageHandler {
             String param="";
             if (splitted.length>1)
                 param = splitted[1];
+
+
+
             if (command.toUpperCase().equals("SET NUMBER"))
             {
                 saveState(param);
@@ -30,6 +33,8 @@ public class MessageHandler {
                 String number = MessageHandler.getState(clientHandler.getMyIp());
                 if (param.toLowerCase().equals("g"))
                     s = new Solver(number);
+                else if (param.equals("c"))
+                    s = new CentsSolver(number);
                 else if (param.equals("%"))
                     s = new PercentualSolver(number);
                 else if (param.startsWith("/"))
