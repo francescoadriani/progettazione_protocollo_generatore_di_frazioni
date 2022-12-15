@@ -1,6 +1,3 @@
-import java.net.InetAddress;
-import java.sql.Date;
-import java.util.HashMap;
 
 public class MessageHandler {
     private ClientHandler clientHandler;
@@ -16,21 +13,19 @@ public class MessageHandler {
             if (splitted.length>1)
                 param = splitted[1];
 
-
-
             if (command.toUpperCase().equals("SET NUMBER"))
             {
                 saveState(param);
-                clientHandler.answer("NUMBER=" + MessageHandler.getState(clientHandler.getMyIp()));
+                clientHandler.answer("NUMBER=" + State.getState(clientHandler.getMyIp()));
             }
             else if (command.toUpperCase().equals("GET NUMBER"))
             {
-                clientHandler.answer("NUMBER=" + MessageHandler.getState(clientHandler.getMyIp()));
+                clientHandler.answer("NUMBER=" + State.getState(clientHandler.getMyIp()));
             }
             else if (command.toUpperCase().equals("GET FRACTION"))
             {
                 Solver s=null;
-                String number = MessageHandler.getState(clientHandler.getMyIp());
+                String number = State.getState(clientHandler.getMyIp());
                 if (param.toLowerCase().equals("g"))
                     s = new Solver(number);
                 else if (param.equals("c"))
@@ -55,22 +50,6 @@ public class MessageHandler {
     }
 
     public void saveState(String number){
-        MessageHandler.saveState(number, this.clientHandler.getMyIp());
-    }
-
-    static HashMap<InetAddress, State> stateList = new HashMap<InetAddress, State>();
-    public static void saveState(String number, InetAddress ip){
-        if (stateList.containsKey(ip))
-            stateList.remove(ip);
-        Date now = new Date(System.currentTimeMillis());
-        stateList.put(ip,new State(ip, now, number));
-        
-    }
-    public static String getState(InetAddress ip){
-        if (!stateList.containsKey(ip)){
-            Date now = new Date(System.currentTimeMillis());
-            stateList.put(ip,new State(ip, now));
-        }
-        return ((State)(stateList.get(ip))).getNumber();
+        State.saveState(number, this.clientHandler.getMyIp());
     }
 }

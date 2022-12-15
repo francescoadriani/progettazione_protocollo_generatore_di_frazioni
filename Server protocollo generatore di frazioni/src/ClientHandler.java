@@ -42,7 +42,6 @@ public class ClientHandler extends Thread{
             try {
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true);
                 out.println(message);
-                //this.client.getOutputStream().write((message + "\r").getBytes());
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

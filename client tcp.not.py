@@ -1,0 +1,13 @@
+import socket
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(("127.0.0.1", 10108))
+client.send("SET NUMBER=3.1415".encode())
+print(client.recv(1024).decode())
+client.send("GET NUMBER=3.1415".encode())
+print(client.recv(1024).decode())
+client.send("GET FRACTION=%".encode())
+print(client.recv(1024).decode())
+client.send("GET FRACTION=g".encode())
+print(client.recv(1024).decode())
+client.send("GET FRACTION=/99".encode())
+print(client.recv(1024).decode())

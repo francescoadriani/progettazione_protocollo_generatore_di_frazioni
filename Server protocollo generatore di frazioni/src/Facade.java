@@ -7,18 +7,17 @@ public class Facade {
         ArrayList<ClientHandler> clientHandlerList = new ArrayList<ClientHandler>();
         ServerSocket serverSocket = new ServerSocket(10108);
         System.out.println("Server started at " + serverSocket.getInetAddress().getHostAddress() + " port " + serverSocket.getLocalPort());
-        try {
-            while (true){
+        while (true){
+            try {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected " + clientSocket.getInetAddress().getHostName() + " port " + clientSocket.getPort());
                 ClientHandler cHandler = new ClientHandler(clientSocket);
                 cHandler.start();
                 clientHandlerList.add(cHandler);
             }
+            catch(Exception e){
+            }
         }
-        catch(Exception e){
-
-        }
-        serverSocket.close();
+        //serverSocket.close();
     }
 }
